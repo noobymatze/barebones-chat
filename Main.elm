@@ -74,10 +74,7 @@ update msg model =
         newMessages =
           model.messages ++ [message]
       in
-        ({ model
-           | messages = newMessages
-           , ownMessage = ""
-         }
+        ({ model | messages = newMessages }
         , Cmd.none
         )
   
