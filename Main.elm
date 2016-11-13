@@ -10,10 +10,11 @@ import Html.Events exposing (onInput, onClick)
 
 main : Program Never
 main =
-  App.beginnerProgram
-    { model = init
+  App.program
+    { init = init
     , update = update
     , view = view
+    , subscriptions = subscriptions
     }
 
 
@@ -28,11 +29,13 @@ type alias Model =
   }
 
 
-init : Model
+init : (Model, Cmd Msg)
 init =
-  { ownMessage = ""
-  , messages = []
-  }
+  ({ ownMessage = ""
+   , messages = []
+   }
+  , Cmd.none
+  )
 
 
 -- UPDATE
@@ -42,21 +45,25 @@ type Msg
   | Broadcast
 
 
-update : Msg -> Model -> Model
+update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
   case msg of
     UpdateOwnMessage message ->
-      { model | ownMessage = message }
+      ({ model | ownMessage = message }
+      , Cmd.none
+      )
 
     Broadcast ->
       let
         newMessages =
           model.messages ++ [model.ownMessage]
       in
-        { model
-          | messages = newMessages
-          , ownMessage = ""
-        }
+        ({ model
+           | messages = newMessages
+           , ownMessage = ""
+         }
+        , Cmd.none
+        )
   
 
 -- VIEW
@@ -99,3 +106,10 @@ viewMessage msg =
     []
     [ text msg
     ]
+
+
+-- SUBSCRIPTIONS
+
+subscriptions : Model -> Sub Msg
+subscriptions model =
+  Sub.none
