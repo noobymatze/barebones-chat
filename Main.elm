@@ -1,7 +1,7 @@
 module Main exposing (..)
 
 import Html.App as App
-import Html exposing (Html, text, div, input, button, section)
+import Html exposing (Html, text, div, textarea, button, section)
 import Html.Attributes exposing (type', value, class)
 import Html.Events exposing (onInput, onClick)
 
@@ -73,10 +73,9 @@ view model =
 viewOwnMessageInput : String -> Html Msg
 viewOwnMessageInput ownMessage =
   div
-    []
-    [ input
-        [ type' "text"
-        , value ownMessage
+    [ class "message-input" ]
+    [ textarea
+        [ value ownMessage
         , onInput UpdateOwnMessage
         ] []
     , button

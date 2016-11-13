@@ -1,0 +1,97 @@
+/*
+ * Make the box model consistent.
+ */
+
+* {
+  box-sizing: border-box;
+}
+
+
+/*
+ * Consistent and simple line height and
+ * font handling in <html> and <body>
+ */
+
+html {
+  line-height: 150%;
+}
+
+
+body {
+  font-size: 1.2em;
+  font-family: Georgia;
+  color: #333;
+}
+
+
+/*
+ * Dirty hack to make the
+ */
+
+html,
+body,
+#app,
+#app > div {
+  height: 100%;
+}
+
+
+/*
+ * Actual styles for chat app.
+ */
+
+#app {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
+
+/*
+ * Messages
+ */
+
+.messages {
+  position: absolute;
+  max-height: 100%;
+  padding: 20px;
+  padding-bottom: 100px;
+  overflow-y: auto;
+  width: 100%;
+}
+
+
+.messages > div {
+  margin: 16px 0px;
+}
+
+
+/*
+ * Put the message box at the bottom.
+ */
+
+.message-input {
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  flex: 0 0 80%;
+  padding: 20px;
+  width: 100%;
+}
+
+
+.message-input textarea {
+  flex: 3;
+  padding: 6px;
+}
+
+
+.message-input button {
+  flex: 1;
+  padding: 6px;
+}
+
+
