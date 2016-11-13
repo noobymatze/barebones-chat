@@ -4,6 +4,7 @@ import Html.App as App
 import Html exposing (Html, text, div, textarea, button, section)
 import Html.Attributes exposing (type', value, class)
 import Html.Events exposing (onInput, onClick)
+import WebSocket exposing (listen, send)
 
 
 -- MAIN
@@ -26,6 +27,7 @@ type alias Message = String
 type alias Model = 
   { ownMessage : String
   , messages : List Message
+  , serverUrl : String
   }
 
 
@@ -33,6 +35,7 @@ init : (Model, Cmd Msg)
 init =
   ({ ownMessage = ""
    , messages = []
+   , serverUrl = "ws://localhost:8080/chat"
    }
   , Cmd.none
   )
@@ -43,6 +46,7 @@ init =
 type Msg
   = UpdateOwnMessage String
   | Broadcast
+  | IncomingMessage String
 
 
 update : Msg -> Model -> (Model, Cmd Msg)
@@ -57,6 +61,18 @@ update msg model =
       let
         newMessages =
           model.messages ++ [model.ownMessage]
+      in
+        ({ model
+           | messages = newMessages
+           , ownMessage = ""
+         }
+        , send model.serverUrl model.ownMessage
+        )
+
+    IncomingMessage message ->
+      let
+        newMessages =
+          model.messages ++ [message]
       in
         ({ model
            | messages = newMessages
@@ -112,4 +128,4 @@ viewMessage msg =
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-  Sub.none
+  listen model.serverUrl IncomingMessage
