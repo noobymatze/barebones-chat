@@ -1,17 +1,16 @@
 module Main exposing (..)
 
-import Html.App as App
 import Html exposing (Html, text, div, textarea, button, section)
-import Html.Attributes exposing (type', value, class)
+import Html.Attributes exposing (value, class)
 import Html.Events exposing (onInput, onClick)
 import WebSocket exposing (listen, send)
 
 
 -- MAIN
 
-main : Program Never
+main : Program Never Model Msg
 main =
-  App.program
+  Html.program
     { init = init
     , update = update
     , view = view
