@@ -12,8 +12,9 @@
       <div id="app"></div>
       <script src="elm.js"></script>
       <script>
+        const websocketUrl = "ws://localhost:8080/chat";
         var container = document.querySelector('#app');
-        var app = Elm.Main.embed(container);
+        var app = Elm.Main.embed(container, websocketUrl);
       </script>
     </body>
 </html>

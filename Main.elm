@@ -8,9 +8,9 @@ import WebSocket exposing (listen, send)
 
 -- MAIN
 
-main : Program Never Model Msg
+main : Program WebSocketUrl Model Msg
 main =
-  Html.program
+  Html.programWithFlags
     { init = init
     , update = update
     , view = view
@@ -20,21 +20,23 @@ main =
 
 -- MODEL
 
+type alias WebSocketUrl = String
+
 type alias Message = String
 
 
 type alias Model = 
   { ownMessage : String
   , messages : List Message
-  , serverUrl : String
+  , serverUrl : WebSocketUrl
   }
 
 
-init : (Model, Cmd Msg)
-init =
+init : WebSocketUrl -> (Model, Cmd Msg)
+init url =
   ({ ownMessage = ""
    , messages = []
-   , serverUrl = "ws://localhost:8080/chat"
+   , serverUrl = url
    }
   , Cmd.none
   )
